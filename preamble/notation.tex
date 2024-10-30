@@ -1,0 +1,273 @@
+%================= Math notation ================%
+
+
+%%====== General ======%
+
+%%% Number sets
+\newcommand{\complexes}{\mathbb{C}}   % \DeclareMathSymbol{\complexes}{\mathalpha}{AMSb}{"43}
+\newcommand{\reals}{\mathbb{R}}       % \DeclareMathSymbol{\reals}{\mathalpha}{AMSb}{"52}
+\newcommand{\rationals}{\mathbb{Q}}   % \DeclareMathSymbol{\rationals}{\mathalpha}{AMSb}{"51}
+\newcommand{\integers}{\mathbb{Z}}    % \DeclareMathSymbol{\integers}{\mathalpha}{AMSb}{"5A}
+\newcommand{\naturals}{\mathbb{N}}    % \DeclareMathSymbol{\naturals}{\mathalpha}{AMSb}{"4E}
+\newcommand{\field}{\mathbb{K}}       % \DeclareMathSymbol{\field}{\mathalpha}{AMSb}{"4B}
+%%%% Numberset modifiers
+\newcommand{\nonzero}[1]{#1^{\times}}
+\newcommand{\positive}[1]{#1_{+}}
+\newcommand{\negative}[1]{#1_{-}}
+
+%%% Basic operators/relations
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\dom}{dom}
+
+%%% Default greeks
+\let\uglyepsilon\epsilon
+\let\epsilon\undefined
+\newcommand{\epsilon}{\varepsilon}
+\let\roundphi\phi
+\let\phi\undefined
+\newcommand{\phi}{\varphi}
+
+%%% Default letter decorations
+\let\uglyhat\hat
+\let\hat\widehat
+
+\let\uglytilde\tilde
+\let\tilde\widetilde
+
+\let\uglybar\bar
+\let\bar\overline
+
+\let\uglyvec\vec
+\let\vec\overrightarrow
+
+%%% Delimiters
+\let\originalmiddle=\middle                          % https://tex.stackexchange.com/a/431820
+\def\middle#1{\mathrel{}\originalmiddle#1\mathrel{}} % space \middle| like \mid
+
+\delimitershortfall=-1pt % scale nested delimiters: https://tex.stackexchange.com/a/36296
+
+%%% Special functions
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+
+%%====== Set theory ======%
+
+\DeclareMathOperator{\powerset}{\mathcal{P}}
+\DeclareMathOperator{\indicator}{\mathbbm{1}}
+\DeclarePairedDelimiter{\card}{\lvert}{\rvert}
+
+%%% Default symbols
+\let\uglyemptyset\emptyset
+\let\emptyset\varnothing
+
+%%====== Combinatorics ======%
+
+\renewcommand{\choose}[2]{\mathrm{C}_{#1}^{#2}}
+\newcommand{\arrange}[2]{\mathrm{A}_{#1}^{#2}}
+
+
+%%====== Measure theory ======%
+
+\DeclareMathOperator{\borel}{\mathcal{B}}
+
+
+%%====== Probability ======%
+
+%%% Basic operators/relations
+\let\Pr\undefined
+\DeclareMathOperator{\Pr}{\mathbb{P}}
+\DeclareMathOperator{\expect}{\mathbb{E}}
+\DeclareMathOperator{\var}{\mathbb{V}}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\corr}{corr}
+\DeclareMathOperator{\mode}{mode}
+\DeclareMathOperator{\median}{med}
+\newcommand{\average}[1]{\overline{#1}}
+\newcommand{\follows}{\mathrel{\sim}}
+\newcommand{\independent}{\mathrel{\perp\kern-5pt\perp}}
+
+
+%%%  Distributions
+\DeclareMathOperator{\poisson}{\mathcal{P}}
+\DeclareMathOperator{\normal}{\mathcal{N}}
+\DeclareMathOperator{\exponential}{\mathcal{E}}
+\DeclareMathOperator{\uniform}{\mathcal{U}}
+\DeclareMathOperator{\chiSquared}{\chi^2}
+
+
+%%% Advanced operators
+\DeclareMathOperator{\entropy}{H}
+\DeclareMathOperator{\kl}{D_{KL}}
+
+
+
+%%====== Analysis ======%
+
+%%% Basic operators/relations
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\newcommand{\diff}{\mathop{}\!\mathrm{d}}
+\newcommand{\pdiff}{\mathop{}\!\partial}
+\newcommand{\grad}{\mathop{}\!\nabla}
+\newcommand{\natgrad}{\mathop{}\!\tilde{\nabla}}
+\renewcommand{\limsup}{\overline{\lim}}
+\renewcommand{\liminf}{\underline{\lim}}
+\DeclareMathOperator{\jacobian}{J}
+\DeclareMathOperator{\hessian}{H}
+
+%%% Transforms
+\DeclareMathOperator{\laplace}{\mathcal{L}}
+\DeclareMathOperator{\fourier}{\mathcal{F}}
+
+%%% Landau notation
+\DeclareMathOperator{\bigO}{\mathcal{O}}
+\DeclareMathOperator{\littleO}{o}
+\DeclareMathOperator{\bigOmega}{\Omega}
+\DeclareMathOperator{\littleOmega}{\omega}
+\DeclareMathOperator{\bigTheta}{\Theta}
+\DeclareMathOperator{\littleTheta}{\theta}
+
+
+%%====== Algebra ======%
+
+\DeclareMathOperator{\image}{Im}
+
+%%% Groups
+
+%%%% Important groups
+\DeclareMathOperator{\glinear}{GL}
+\DeclareMathOperator{\slinear}{SL}
+\DeclareMathOperator{\gorthogonal}{O}
+\DeclareMathOperator{\sorthogonal}{SO}
+\DeclareMathOperator{\geuclidean}{E}
+\DeclareMathOperator{\seuclidean}{SE}
+\DeclareMathOperator{\gaffine}{GA}
+
+%%%% Groups of morphisms
+\DeclareMathOperator{\gend}{End}
+\DeclareMathOperator{\gaut}{Aut}
+
+
+
+
+%%====== Linear algebra ======%
+
+%%% Named operators
+\DeclareMathOperator{\spectrum}{spec}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\vecop}{vec}
+\DeclareMathOperator{\mat}{mat}
+\DeclareMathOperator{\spann}{span}
+
+%%% Exponent-like operators
+% taken from https://tex.stackexchange.com/a/136464
+\newcommand{\transpose}[1]{#1^{\mkern-1.5mu\mathsf{T}}}
+\newcommand{\adjoint}[1]{#1^{\mkern-1.5mu\mathsf{H}}}
+\newcommand{\pseudoinv}[1]{#1^{\dagger}}
+\newcommand{\itranspose}[1]{#1^{\mkern-1.5mu\mathsf{-T}}}
+
+%%% Norms
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\newcommand{\lpnorm}[2][2]{\norm*{#2}_{#1}}
+
+%%% Products
+\newcommand{\tensordot}{\mathbin{\otimes}}
+\newcommand{\hadadot}{\mathbin{\odot}}
+\newcommand{\krondot}{\mathbin{\otimes}}
+\DeclarePairedDelimiter{\inner}{\langle}{\rangle}
+
+%%% Matrix inequalities
+\newcommand{\matle}{\preceq}
+\newcommand{\matge}{\succeq}
+\newcommand{\matlt}{\prec}
+\newcommand{\matgt}{\succ}
+
+
+%%% Special spaces
+\DeclareMathOperator{\krylov}{\mathcal{K}}
+
+
+%%====== Complex numbers ======%
+\let\Re\undefined
+\let\Im\undefined
+\DeclareMathOperator{\Re}{\mathfrak{Re}}
+\DeclareMathOperator{\Im}{\mathfrak{Im}}
+
+%%====== Topology ======%
+
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\boundary}{\partial}
+\newcommand{\closure}{\overline}
+\DeclareMathOperator{\ball}{B}
+\DeclareMathOperator{\cball}{\overline{B}}
+
+%%% Metric spaces
+\DeclareMathOperator{\diam}{diam}
+
+%%====== Optimization ======%
+
+%%% Operators
+\DeclareMathOperator{\proximal}{prox}
+
+
+%% ====== Differential geometry ======%
+
+\newcommand{\pullback}[1]{\mathop{#1^{\ast}}\!}
+\newcommand{\pushforward}[1]{\mathop{#1_{\ast}}\!}
+
+
+
+%================= CS notation =================%
+
+
+%%====== General ======%
+
+
+%%====== Complexity theory ======%
+
+%%% Complexity classes
+
+\newclass{\classP}{P}
+\newclass{\classNP}{NP}
+\newclass{\classNPO}{NPO}
+
+%%% Problems
+\newlang{\knapsack}{KNAPSACK}
+
+%%====== ML ======%
+
+%%% Activation functions
+\DeclareMathOperator{\softmax}{softmax}
+\DeclareMathOperator{\relu}{ReLU}
+\DeclareMathOperator{\sigmoid}{\sigma}
+\DeclareMathOperator{\gelu}{GeLU}
+\DeclareMathOperator{\lrelu}{LReLU}
+\DeclareMathOperator{\elu}{ELU}
+
+%%% ERM
+\DeclareMathOperator{\risk}{\mathcal{R}}
+\DeclareMathOperator{\erisk}{\hat{\risk}}
+
+%%% Complexity measures
+\DeclareMathOperator{\vc}{\dim_{VC}}
+\DeclareMathOperator{\rademacher}{\mathfrak{R}}
+
+%================= PhD notation =================%
+
+
+%% Data quality metrics
+
+\DeclareMathOperator{\consistency}{consist}
+\DeclareMathOperator{\completeness}{comp}
+\DeclareMathOperator{\inconsistency}{\overline{consist}}
+\DeclareMathOperator{\accuracy}{accuracy}
+\DeclareMathOperator{\numacc}{numaccuracy}
+\DeclareMathOperator{\catacc}{cataccuracy}
+\DeclareMathOperator{\targacc}{targaccuracy}
+\DeclareMathOperator{\uniqueness}{unique}
+\DeclareMathOperator{\imbalance}{\overline{balance}}
+\DeclareMathOperator{\balance}{balance}

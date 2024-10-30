@@ -1,0 +1,61 @@
+{
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.autoClean.run": "onBuilt",
+  "latex-workshop.latex.tools": [
+    {
+      "name": "compile",
+      "command": "latexmk",
+      "args": ["-pdf", "main.tex", "-shell-escape"],
+      "env": {}
+    },
+    {
+      "name": "makeglossaries",
+      "command": "makeglossaries",
+      "args": ["main"]
+    },
+    {
+      "name": "clean",
+      "command": "latexmk",
+      "args": ["-c", "main.tex"]
+    },
+    {
+      "name": "bibprune",
+      "command": "bibtool",
+      "args": [
+        "--preserve.key.case=on",
+        "-x",
+        "main.aux",
+        "-o",
+        "bibliography.bib"
+      ]
+    }
+  ],
+
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "build",
+      "tools": ["compile", "compile", "clean"]
+    }
+  ],
+  "latex-workshop.latex.recipe.default": "build",
+
+  "latex-workshop.intellisense.citation.label": "title",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "efoerster.texlab",
+  "ltex.language": "en-US",
+  "ltex.enabled": [
+    "context",
+    "context.tex",
+    "html",
+    "latex",
+    "markdown",
+    "org",
+    "restructuredtext",
+    "rsweave"
+  ],
+  "latex-workshop.hover.preview.newcommand.newcommandFile": "preamble/notation.tex",
+  "editor.detectIndentation": false,
+  "[latex]": {
+    "editor.defaultFormatter": "efoerster.texlab"
+  }
+}

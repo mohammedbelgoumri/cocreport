@@ -1,0 +1,173 @@
+\usepackage[abbreviations,nonumberlist]{glossaries-extra}
+\setabbreviationstyle{long-short}
+\GlsXtrEnableInitialTagging{abbreviation}{\itag}
+\newcommand{\taghighlight}[1]{\uppercase{\textbf{#1}}}
+\renewcommand{\glsxtrtagfont}{\taghighlight}
+
+%==================== Math terms ====================%
+
+%%====== Probability terms ======%
+
+\newabbreviation{abb:iid}{\textit{i.i.d.}}{\itag{i}ndependent and \itag{i}dentically \itag{d}istributed}
+\newabbreviation{abb:kl}{KL}{\itag{K}ullback-\itag{L}eibler}
+
+%==================== CS terms ======================%
+
+%%====== General terms ======%
+%%====== Complexity theory terms ======%
+%%====== Cybersecurity terms ======%
+
+%%====== Optimization terms ======%
+
+%%% Optimization algorithms
+\newabbreviation{abb:gd}{GD}{\itag{g}radient \itag{d}escent}
+\newabbreviation{abb:sgd}{SGD}{\itag{s}tochastic \itag{g}radient \itag{d}escent}
+
+\newabbreviation{abb:mim}{MIM}{\itag{m}an-in-the-\itag{m}iddle}
+
+
+%%====== AI terms ======%
+
+\newabbreviation{abb:ai}{AI}{\itag{A}rtificial \itag{I}ntelligence}
+
+%%% ML terms
+
+\newabbreviation{abb:ml}{ML}{\itag{M}achine \itag{L}earning}
+\newabbreviation{abb:ood}{OOD}{\itag{O}ut \itag{O}f \itag{D}istribution}
+\newabbreviation{abb:rl}{RL}{\itag{R}einforcement \itag{L}earning}
+\newabbreviation{abb:knn}{\(k\)NN}{\itag{\(k\)}-\itag{n}earest \itag{n}eighbors}
+\newabbreviation{abb:dgp}{DGP}{\itag{d}ata \itag{g}eneration \itag{p}rocess}
+
+%%%% Classical ML terms
+
+\newabbreviation[longplural={\itag{s}upport \itag{v}ector \itag{m}achines}]%
+{abb:svm}{SVM}{\itag{S}upport \itag{V}ector \itag{M}achine}
+
+%%%% Deep Learning terms
+
+\newabbreviation{abb:dl}{DL}{\itag{D}eep \itag{L}earning}
+\newabbreviation{abb:drl}{DRL}{\itag{D}eep \itag{R}einforcement \itag{L}earning}
+
+%%%%% Deep Learning Architectures
+
+\newabbreviation[longplural={\itag{n}eural \itag{n}etworks}]%
+{abb:nn}{NN}{\itag{N}eural \itag{N}etwork}
+
+\newabbreviation[longplural={\itag{d}eep \itag{n}eural \itag{n}etworks}]%
+{abb:dnn}{DNN}{\itag{D}eep \itag{N}eural \itag{N}etwork}
+
+\newabbreviation[longplural={\itag{g}ated \itag{r}ecurrent \itag{u}nits}]%
+{abb:gru}{GRU}{\itag{G}ated \itag{R}ecurrent \itag{U}nit}
+
+\newabbreviation[longplural={\itag{g}raph \itag{n}eural \itag{n}etworks}]%
+{abb:gnn}{GNN}{\itag{G}raph \itag{N}eural \itag{N}etwork}
+
+\newabbreviation[longplural={\itag{c}onvolutional \itag{n}eural \itag{n}etworks}]%
+{abb:cnn}{CNN}{\itag{C}onvolutional \itag{N}eural \itag{N}etwork}
+
+\newabbreviation[longplural={\itag{g}enerative \itag{a}dversarial \itag{n}etworks}]%
+{abb:gan}{GAN}{\itag{G}enerative \itag{A}dversarial \itag{N}etwork}
+
+\newabbreviation{abb:mlp}{MLP}{\itag{M}ulti\itag{L}ayer \itag{P}erceptron}
+
+%%%% Federated Learning terms
+
+\newabbreviation{abb:fl}{FL}{\itag{F}ederated \itag{L}earning}
+\newabbreviation{abb:fedavg}{FedAvg}{\itag{fed}erated \itag{av}era\itag{g}ing}
+\newabbreviation{abb:gar}{GAR}{\itag{G}radient \itag{A}ggregation \itag{R}ule}
+
+%%%% Theoretical ML terms
+
+\newabbreviation{abb:erm}{ERM}{\itag{E}mpirical \itag{R}isk \itag{M}inimization}
+\newabbreviation{abb:vc}{VC}{\itag{V}apnik-\itag{C}hervonenkis}
+\newabbreviation{abb:ferm}{FERM}%
+{\itag{F}ederated \itag{E}mpirical \itag{R}isk \itag{M}inimization}
+\newabbreviation{abb:dro}{DRO}{\itag{D}istributionally \itag{R}obust \itag{O}ptimization}
+\newabbreviation{abb:irm}{IRM}{\itag{I}nvariant \itag{R}isk \itag{M}inimization}
+
+%%%% ML datasets
+
+\newabbreviation{abb:mnist}{MNIST}%
+{\itag{M}odified \itag{N}ational \itag{I}nstitute of \itag{S}tandards and \itag{T}echnology}
+\newabbreviation{abb:cifar}{CIFAR}{\itag{C}anadian \itag{I}nstitute for \itag{A}dvanced \itag{F}oundational \itag{R}esearch}
+
+%%%% ML attacks
+
+\newabbreviation[longplural={\itag{m}embership \itag{i}nference \itag{a}ttacks}]%
+{abb:mia}{MIA}{\itag{m}embership \itag{i}nference \itag{a}ttack}
+
+\newabbreviation[longplural={\itag{c}lass \itag{r}epresentative \itag{i}nference \itag{a}ttacks}]%
+{abb:cria}{CRIA}{\itag{c}lass \itag{r}epresentative \itag{i}nference \itag{a}ttack}
+
+\newabbreviation{abb:pia}{PIA}{\itag{P}roperty \itag{I}nference \itag{A}ttack}
+
+\newabbreviation{abb:dra}{DRA}{\itag{D}ata \itag{R}ecoverability \itag{A}ttack}
+
+\newabbreviation{abb:dlg}{DLG}{\itag{Deep} \itag{Leakage} from \itag{G}radients}
+
+
+
+
+
+
+%==================== PhD terms =====================%
+
+
+
+% AI Terms
+
+
+%%% Classical ML Terms
+
+
+%%% Deep Learning Terms
+
+%%%% Deep Learning Architectures
+
+
+%%% Theoretical ML terms
+
+
+%%% ML datasets
+
+%%% ML attacks
+
+%%% ML defenses
+
+\newabbreviation{abb:PoL}{PoL}{\itag{p}roof \itag{o}f \itag{L}earning}
+\newabbreviation{abb:ios}{IOS}{\itag{I}terative \itag{O}utlier \itag{S}cissor}
+
+\newabbreviation{abb:dp}{DP}{\itag{d}ifferential \itag{p}rivacy}
+\newabbreviation{abb:he}{HE}{\itag{h}omomorphic \itag{e}ncryption}
+\newabbreviation{abb:smc}{SMC}{\itag{S}ecure \itag{M}ultiparty \itag{C}omputation}
+
+
+% Probability Terms
+
+
+% Cybersecurity Terms
+
+
+% Edge Computing Terms
+\newabbreviation{abb:ec}{EC}{\itag{E}dge \itag{C}omputing}
+
+%% EC paradigms
+\newabbreviation{abb:mec}{MEC}{\itag{M}obile \itag{E}dge \itag{C}omputing}
+\newabbreviation{abb:fc}{FC}{\itag{F}og \itag{C}omputing}
+
+%% IoT Terms
+\newabbreviation{abb:iot}{IoT}{\itag{I}nternet \itag{o}f \itag{T}hings}
+\newabbreviation{abb:iov}{IoV}{\itag{I}nternet \itag{o}f \itag{V}ehicles}
+\newabbreviation[%
+	longplural={\itag{a}utonomous \itag{v}ehicles},%
+]%
+{abb:av}{AV}{\itag{A}utonomous \itag{V}ehicle}
+\newabbreviation{abb:vanet}{VANET}{\itag{V}ehicular \itag{A}d-hoc \itag{NET}work}
+\newabbreviation{abb:aiot}{AIoT}{\itag{A}rtificial \itag{I}ntelligence \itag{o}f \itag{T}hings}
+
+% Data Quality Terms
+\newabbreviation{abb:dq}{DQ}{\itag{D}ata \itag{Q}uality}
+\newabbreviation{abb:ovb}{OVB}{\itag{O}mitted \itag{V}ariable \itag{B}ias}
+
+% Venues
+\newabbreviation{abb:vldb}{VLDB}{\itag{V}ery \itag{L}arge \itag{D}ata \itag{B}ases}

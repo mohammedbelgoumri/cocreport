@@ -1,0 +1,21 @@
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\definecolor{CiteBlue}{HTML}{50A8C6}
+\definecolor{Link}{named}{DarkBlue}
+
+\makeatletter
+\hypersetup{%
+	colorlinks=true,
+	linkcolor=Link,
+	citecolor=CiteBlue,
+	urlcolor=blue,
+	pagecolor=red,
+	pdfkeywords={Machine Learning, Data Quality, Loss Landscape Analysis},
+	pdfauthor={Mohammed D. Belgoumri, Mohamed R. Bouadjenek, Hakim Hacid, Sunil Aryal},
+	pdftitle={Loss landscape analysis: State of the art and future directions}
+}
+
+% Cleveref formats
+\crefformat{principle}{principle.~#2#1#3}
+\AtBeginEnvironment{appendices}{\crefalias{chapter}{appendix}}

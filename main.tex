@@ -1,0 +1,85 @@
+\documentclass[12pt]{report}
+
+\input{preamble/preamble}
+
+\title{Investigating the impact of data quality on the geometry and dynamics of machine learning}
+\author{Mohammed D. Belgoumri}
+
+\graphicspath{{assets/figures/}}
+\begin{document}
+\input{titlepage}
+
+\begin{abstract}
+	\addcontentsline{toc}{chapter}{Abstract}
+	\thispagestyle{plain}
+	\pagenumbering{roman}
+	The quality of a \glsxtrfull{abb:ml} model can be measured on three (non-orthogonal) axes:
+	\begin{enumerate*}[label=(\arabic*)]
+		\item approximation (or expressivity),
+		\item generalization, and
+		\item optimization.
+	\end{enumerate*}
+	Of these three, training data exerts significant influence on two,
+	namely, generalization and optimization,
+	justifying the centrality of \glsxtrfull{abb:dq} as a concern in \glsxtrshort{abb:ml}.
+	While the interplay between data quality and model performance
+	is both intuitive and well-documented as a phenomenon, the
+	mechanisms that underlie it are much less well-understood.
+	The above observation is even more pressing in distributed settings,
+	such as \glsxtrfull{abb:fl} on the edge,
+	both because \glsxtrshort{abb:dq} is harder to assess in such settings,
+	and because distributed training complicates the interaction between data and model.
+	In light of this situation, we undertake the task of characterizing the impact of data quality
+	on the learning dynamics of \glsxtrfull{abb:dl},
+	in the general context and in the specific context of \glsxtrshort{abb:ml} on the edge.
+	We attempt to do so through the lens of loss landscape analysis,
+	a universally applicable framework for studying \glsxtrfull{abb:nn} phenomena.
+	Our objective is first and foremost, to provide an improved understanding
+	of the ways in which data quality influences the learning process, and by extension,
+	the mechanisms by which existing \glsxtrshort{abb:dq}-robsustness techniques work.
+	Our study is therefore exploratory in nature, and more descriptive than prescriptive.
+	That being said, we do find multiple opportunities for the development of new techniques
+	for improving, rather than merely understanding \glsxtrshort{abb:dq}-robustness.
+	%
+	We start by reviewing the literature on \glsxtrfull{abb:dq} in edge \glsxtrshort{abb:ml},
+	compiling our findings in a survey that is currently under review
+	for publication in the \glsxtrfull{abb:vldb} journal (see \Cref{app:survey}).
+	Next, we take a closer look at the literature on loss landscape analysis,
+	with particular focus on data-centric approaches,
+	with the aim of identifying gaps in our current understanding.
+	We then formulate a list of research questions and objectives and describe our methodology.
+	Finally, we showcase the current state of our advancement,
+	providing an account of the results we have obtained so far,
+	a discussion of the challenges we are facing,
+	a preview of our next steps,
+	and a summary of our failed attempts.
+\end{abstract}
+\setcounter{page}{2}
+\tableofcontents
+\newpage
+\listoffigures
+\listoftables
+
+\setlength{\parskip}{1em}
+\renewcommand{\baselinestretch}{2.0}
+
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\chapter*{Introduction}
+\chapter{Motivation}
+\section{ML, FL, and data quality}
+\section{Loss landscape analysis}
+\chapter{State of the art}
+\chapter{Contribution}
+\section{Research questions}
+\section{Methodology}
+\section{Results and discussion}
+\section{Failed attempts}
+\chapter*{Conclusion}
+\begin{appendices}
+	\chapter{Data quality for edge ML survey}\label{app:survey}
+	\includepdf[pages=-21]{appendices/survey.pdf}
+\end{appendices}
+\end{document}
