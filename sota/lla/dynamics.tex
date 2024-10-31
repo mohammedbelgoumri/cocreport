@@ -1,0 +1,41 @@
+\section{Dynamics}\label{sec:dynamics}
+
+The loss landscape is a static object, serving as a static stage on which learning occurs.
+Having discussed its geometry at length in previous sections,
+we now turn our attention to the temporal dynamics of learning.
+
+\cite{%
+	fortDeepLearningKernel2020,%
+	belferSpectralAnalysisNeural2021,%
+	jacotNeuralTangentKernel2018,%
+	tarmounUnderstandingDynamicsGradient2021,%
+	zhaoSymmetriesFlatMinima2023,%
+	tanakaNoethersLearningDynamics2021%
+}
+\subsection{Continuous-time analysis}\label{sub:continuous-time}
+
+The \gls{abb:gd} update rule, given by \Cref{eq:gd},
+is a discrete-time dynamical system with a horrendously complicated transition function.
+\begin{equation}\label{eq:gd}
+	\theta_{t+1} = \theta_{t} - \eta \grad{f}{(\theta_{t})},
+\end{equation}
+As such, it is often very difficult to study analytically.
+Questions about fixed points and stability, which directly map to convergence,
+are intractable for all but a very small set of extremely simple functions (e.g., quadratics).
+This consideration, coupled with the observation that
+\gls{abb:gd} is usually better behaved when the learning rate is small,
+motivates the study of the so called \emph{continuous-time} limit.
+
+Instead of the sequence \((\theta_{t})_{t\in\naturals}\), produced by \Cref{eq:gd},
+consider a \(\classC^{1}{(\positive{\reals})}\) solution of the following initial value problem
+\begin{empheq}[left=\empheqlbrace]{alignat=2}
+	&\dot{\theta} = -\grad{f}{(\theta)}\label{eq:gradflow} \\
+	&\theta(0) = \theta_{0}\label{eq:gradflow:ivp},
+\end{empheq}
+It is easy to verify that \Cref{eq:gd} results from
+applying Euler's method to \Cref{eq:gradflow} with time step \(\eta\),
+but since the latter is an \gls{abb:ode},
+we can use the standard tools from analysis to deduce its properties,
+which we can hope, carry over to the original discrete-time system.
+
+\subsection{\glsfmtlongpl{abb:ntk}}\label{sub:ntk}

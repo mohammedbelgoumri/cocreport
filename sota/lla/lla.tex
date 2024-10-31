@@ -1,1 +1,27 @@
 \chapter{Loss landscape analysis}\label{chap:lla}
+
+Training parameterized \glsxtrfull{abb:ml} models
+is framed as a multi-variable optimization problem,
+where the minimization objective is the empirical risk (average loss over the training data),
+and the variables are the model parameters.
+For model classes with a very large number of parameters,
+solving the training problem analytically requires an intractable amount of computation,
+resulting in the use of iterative gradient-based optimization methods.
+These methods are known to converge to the global minimum for convex objectives,
+but no such guarantees exist without the convexity requirement.
+\Glsxtrfullpl{abb:dnn} are the most prominent example of a model class
+where the training problem is high-dimensional enough to require iterative optimization,
+and where the objective is non-convex negating global convergence guarantees.
+As a result, the parameters of trained \glsxtrshortpl{abb:dnn}
+are only local minima of the loss function.
+However, not all local minima are equal in terms of generalization performance,
+robustness, or rate of convergence.
+The geometry of the loss surface has a significant impact
+on the number and properties of local minima,
+as well as the learning dynamics of the optimization algorithm.
+In this survey, we review the state of the art in loss landscape analysis,
+and highlight some of the most promising directions for future research.
+
+\subimport{.}{background}
+\subimport{.}{sharpness}
+% \subimport{.}{dynamics}

@@ -1,0 +1,122 @@
+\section{Background and foundations}\label{sec:background}
+
+The study of loss landscape geometry is a multidisciplinary endeavor,
+mobilizing a wide array of tools originating from an equally wide range of fields.
+This includes disciplines as desperate as optimization theory and differential geometry on one hand,
+and statistical physics and dynamical systems on the other.
+Loss landscape analysis is therefore relatively inaccessible.
+With this in mind, we dedicate this section to introducing the necessary concepts from these fields,
+upon which the rest of the survey will build.
+\begin{enumerate}
+	\item \citet{zhaoSymmetriesFlatMinima2023}
+	\item Random matrix theory~\cite{%
+		      baskervilleRandomMatrixTheory2023,%
+		      penningtonNonlinearRandomMatrix2017%
+	      }.
+	\item Hessian structure~\cite{%
+		      wuDissectingHessianUnderstanding2022,%
+		      dauphinNeglectedHessianComponent2024%
+	      }.
+\end{enumerate}
+
+\subsection{General setup}\label{sub:background:setup}
+
+We are interested in minimizing a positive differentiable \emph{loss function}
+\(f:\reals^{d}\to\reals\), where \(d\) is a strictly positive integer,
+and \(\reals^{d}\) is a \emph{parameter space}.
+In symbolic terms, we are interested in solving the optimization problem
+\begin{equation}\label{eq:learning-problem}
+	\argmin_{\theta\in\reals^{d}} f(\theta).
+\end{equation}
+To achieve this, a variant of \gls{abb:gd} is typically employed,
+which, given an initial guess \(\theta_{0}\in\reals^{d}\),
+iteratively applies an update rule similar to
+\begin{equation}\label{eq:gd}
+	\theta_{t+1} = \theta_{t} - \eta \grad{f}(\theta_{t}),
+\end{equation}
+where \(\eta > 0\) is a \emph{learning rate}.
+This generates a sequence of iterates \(\left( \theta_{t} \right)_{t\in\naturals}\),
+which hopefully converges to a solution of \Cref{eq:learning-problem}.
+Examining \Cref{eq:gd}, we realize that if \(\theta_{t} \to \theta^{\ast}\),
+then \(\grad{f}(\theta^{\ast}) = 0\).
+That is to say, if iterates converge, they must converge to a critical point of \(f\).
+
+If \(f\) is convex, then all critical points are global minima, which validates our hope.
+However, if \(f\) is non-convex (as it typically is),
+the limit can be a local minimum (which can also be global),
+a saddle point, a degenerate critical point, or even a maximum
+(although this last case does not occur almost surely).
+Moreover, even for convex functions, we can only guarantee that the limit is a global minimum
+under the assumption that it exists.
+\(\theta_{t}\) may fail to converge, or it may converge extremely slowly.
+
+These caveats are examples of the challenges posed by gradient-based optimizers.
+Without deeper understanding of their dynamics, we cannot predict their behavior,
+meaning that we cannot explain their successes nor diagnose their failures.
+An important prerequisite for characterizing these dynamics
+is the study of the stage on which they unfold: the loss landscape.
+Mathematically, the loss landscape is the graph of the loss function,
+i.e. the set
+\[
+	\Gamma = \left\{ \left( \theta, f(\theta) \right) \middle| \theta\in\reals^{d} \right\}.
+\]
+It is a \(d\)-dimensional submanifold of \(\reals^{d} \times \reals \iso \reals^{d+1}\)
+(in this context, referred to as \emph{ambient space}),
+which inherits from it a Riemannian metric and the corresponding geometry.
+
+
+\subsection{Optimization theory and multivariable analysis}\label{sub:background:optimization}
+
+Given the nature of \Cref{eq:learning-problem,eq:gd},
+it is natural to turn to the tools of optimization theory,
+and, in particular, multivariable differential calculus for guidance.
+Taylor's theorem in particular is immensely useful for the study of local loss landscape geometry.
+The full version of Taylor's theorem is a bit overkill for our purposes,
+as we only need first and second order approximations.
+Assuming \(f\) is a \(\classC^{3}\) function%
+\footnote{%
+	Note that this assumption is violated by, \(\relu\),
+	by far the most popular activation function
+	but the existence of several comparable if not superior alternatives,
+	which are \(\classC^{\infty}\) renders this objection moot.
+}, we have for any \(\theta,\delta\in\reals^{d}\) that
+\begin{equation}\label{eq:taylor2}
+	f(\theta+\delta) = f(\theta) + \diff{f}_{\theta}(\delta) +
+	\frac{1}{2}\diff^{2}{f}_{\theta}(\delta, \delta) + \bigO{\left( \norm*{\delta}^{3} \right)},
+\end{equation}
+where \(\diff{f}_{\theta}\) and \(\diff^{2}{f}_{\theta}\)
+are the first and second differentials of \(f\) at \(\theta\).
+The first differential is a linear form on \(\reals^{d}\),
+described by the \emph{Jacobian matrix}
+\begin{equation}\label{eq:jacobian}
+	\frac{\partial f}{\partial \theta}(\theta) \coloneqq \mat{\left( \diff{f}_{\theta} \right)}
+	\in \reals^{1\times d},
+\end{equation}
+while the second differential is a bilinear form on \(\reals^{d}\),
+described by the \emph{Hessian matrix}
+\begin{equation}\label{eq:hessian}
+	\frac{\partial^{2} f}{\partial \theta^{2}}(\theta) \coloneqq \mat{\left( \diff^{2}{f}_{\theta} \right)}
+	\in \reals^{d\times d}.
+\end{equation}
+One can show quite easily that the Hessian matrix is symmetric, and that
+\(\frac{\partial f}{\partial \theta}(\theta)=\transpose{\grad{f}(\theta)}\).
+
+As a particularly important special case of \Cref{eq:taylor2},
+we expand \(f(\theta)\) around a critical point \(\theta^{\ast}\) as
+\begin{equation}\label{eq:critical-vec-taylor2}
+	f(\theta) = f(\theta^{\ast}) + \frac{1}{2}\transpose{\left( \theta - \theta^{\ast} \right)}
+	\hessian\left( \theta - \theta^{\ast} \right) +
+	\bigO{\left( \norm*{\theta - \theta^{\ast}}^{3} \right)},
+\end{equation}
+where \(\hessian = \frac{\partial^{2} f}{\partial \theta^{2}}(\theta^{\ast})\).
+If \(\theta^{\ast}\) is a local minimum of \(f\), then \(\hessian \matge 0\),
+and the right-hand side of \Cref{eq:critical-vec-taylor2} is a convex quadratic,
+meaning that \gls{abb:gd} converges if \(\theta_{0}\) is close enough to \(\theta^{\ast}\).
+More over, since the Hessian matrix is symmetric, the spectral theorem guarantees that
+\begin{equation}\label{eq:heissian-diagonalization}
+	\hessian = \transpose{Q} \diag{(\lambda_{1},\ldots,\lambda_{d})} Q,
+\end{equation}
+where \(Q\in\gorthogonal_d{(\reals)}\)
+and \(\lambda_{1},\ge\lambda_{2}\ge\dots\ge\lambda_{d}\ge 0\).
+
+\subsection{Differential geometry and information geometry}\label{sub:background:geometry}
