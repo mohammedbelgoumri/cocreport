@@ -1,0 +1,98 @@
+\subsection{General notions of machine learning}%
+\label{sub:general_notions_of_ml}
+
+The goal of \gls{abb:ml} is to learn from data algorithmically%
+~\cite{%
+  kulkarniElementaryIntroductionStatistical2011,%
+  vapnikStatisticalLearningTheory1998,%
+  abu-mostafaLearningDataShort2012%
+}.
+This vague goal can be formalized in different ways for different tasks.
+For the sake of simplicity, we will focus on one particularly easy-to-define task,
+namely, \emph{supervised learning}.
+A more general formulation that covers most \gls{abb:ml} tasks is presented in%
+~\cite{grohsMathematicalAspectsDeep2023}.
+
+In supervised machine learning, the goal is to learn a function,
+given a (finite) sample of input-output pairs generated from it,
+where the input distribution is unknown, and the output is possibly noisy%
+~\cite{raschkaMachineLearningPyTorch2022}.
+One way to mathematically phrase this problem
+is presented in this and the following paragraphs.
+Given an \emph{input space} \(\mathcal{X}\),
+an \emph{output space} \(\mathcal{Y}\),
+a \emph{hypothesis class} \(\mathcal{H}\) of measurable functions
+from \(\mathcal{X}\) to \(\mathcal{Y}\),
+and a random pair \((X, Y)\) with values in \(\mathcal{X}\times\mathcal{Y}\),
+with an unknown joint distribution \(\Pr_{(X, Y)}\),
+the goal is to find a function \(f \in \mathcal{H}\),
+that maximized the similarity between the distribution of \(f(X)\)
+and that of \(Y\).
+
+To make this problem completely unambiguous,
+we need to specify a notion of similarity.
+A common way to do so is to start with
+a \emph{loss function} \(\ell: \mathcal{Y}^{2} \to \reals\),
+intuitively thought of as a measure of dissimilarity between two outputs,
+and using the function:
+\begin{equation}\label{eq:risk}
+  \risk(f) \coloneqq \expect \left[ \ell(f(X), Y) \right],
+\end{equation}
+known as the \emph{risk} functional,
+to measure \(f\)'s deviation from the true distribution.
+The problem outlined above can then be expressed as finding the function
+\(f^{\ast} \in \mathcal{H}\) (referred to as the \emph{Bayes optimal} function)
+that minimizes \(\risk\):
+\begin{equation}\label{eq:risk_minimization}
+  f^{\ast} = \argmin_{f \in \mathcal{H}} \risk(f).
+\end{equation}
+Solving \Cref{eq:risk_minimization} is often infeasible in practice
+because the distribution \(\Pr_{(X, Y)}\) is unknown,
+making the risk functional \Cref{eq:risk} uncomputable.
+This problem can be circumvented in the presence of a sample $\xi = \{ (X_{1}, Y_{1}), (X_{2}, Y_{2}),$ $ \ldots, (X_{n}, Y_{n}) \}$
+of \gls{abb:iid} random pairs such that
+\((X_{i}, Y_{i}) \follows \Pr_{(X, Y)}\).
+In this case, the weak law of large numbers gives the following approximation:
+\begin{equation}\label{eq:empirical_risk}
+  \erisk_{\xi}(f) \coloneqq \frac{1}{n} \sum_{i=1}^{n} \ell(f(X_{i}), Y_{i}),
+\end{equation}
+of the risk functional,
+where \(\erisk_{\xi}\)  is referred to as the \emph{empirical risk functional}
+(with respect to the sample \(\xi\)).
+By solving the following \emph{\gls{abb:erm}} problem:
+\begin{equation}\label{eq:empirical_risk_minimization}
+  \hat{f}_{\xi} = \argmin_{f \in \mathcal{H}} \erisk_{\xi}(f)
+\end{equation}
+with a large enough sample size \(n\),
+one can hope to obtain a good approximation of \(f^{\ast}\).
+Put differently, one can hope that the solution \(\hat{f}_{\xi}\)
+of \Cref{eq:empirical_risk_minimization} converges to \(f^{\ast}\) as \(n \to +\infty\).
+In this case, we say that \gls{abb:erm} is \emph{consistent}%
+~\cite{%
+  vapnikPrinciplesRiskMinimization1991,%
+  vapnikNatureStatisticalLearning2010%
+}.
+
+To further simplify it, and make it computationally feasible,
+the learning problem is often formulated for a
+finite-dimensionally parametrized hypothesis class.
+For some \emph{parameter dimension} \(P \in \naturals\),
+and a \emph{parameter space} \(\Theta \subset \reals^{P}\),
+the hypothesis class is defined as $\mathcal{H} =\{ f_{\theta} | \theta \in \Theta \}$,
+reducing the problems of risk minimization and \gls{abb:erm} to
+\begin{align}
+  \theta^{\ast} =      & \argmin_{\theta \in \Theta} \risk(\theta)\label{eq:parametric_risk_minimization} \\
+  \hat{\theta}_{\xi} = & \argmin_{\theta \in \Theta} \erisk_{\xi}(\theta)\label{eq:parametric_erm}
+\end{align}
+respectively, where the abuse of notation
+\(\risk(\theta) \coloneqq \risk(f_{\theta})\) and
+\(\erisk_{\xi}(\theta) \coloneqq \erisk_{\xi}(f_{\theta})\)
+is used.
+This form of the problem has the notable advantage of a finite-dimensional solution space,
+allowing the use of standard optimization algorithms.
+In particular, if \(\ell\) and \(\mathcal{H}\) are chosen such that
+\(\erisk_{\xi}\) is differentiable, convex, and has a lower bound,
+then \Cref{eq:parametric_erm} can be solved using gradient-descent.
+For these reasons, and the fact that most \gls{abb:ml} models are of this form
+(e.g., linear regression, logistic regression, neural networks),
+the rest of this work will refer to \Cref{eq:parametric_erm} as the \gls{abb:erm} problem.

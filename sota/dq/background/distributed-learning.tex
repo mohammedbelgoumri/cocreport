@@ -1,0 +1,46 @@
+\subsubsection{Distributed learning}\label{ssub:background:distl}
+
+The process of training \gls{abb:ml} models by solving \Cref{eq:parametric_erm}
+is a computationally intensive one, particularly, when \(n\) is large
+(which needs to be the case for \gls{abb:erm} to be viable).
+While this is a major inconvenience for cloud-based centralized \gls{abb:ml},
+it is a complete deal-breaker for performing \gls{abb:ml} on resource-constrained edge devices.
+The naive solution of designating a single powerful node to perform the training
+suffers from the same drawback as all centralized computing: inefficient use of resources,
+leading to unnecessarily high energy consumption and long training times%
+~\cite{wangEdgeAIConvergence2020}.
+
+The solution for the inadequacies of centralized computing is already well-known:
+preform the computation in parallel on multiple devices.
+Applying this solution to \gls{abb:ml} gives rise to \emph{distributed learning}%
+~\cite{wangEdgeAIConvergence2020}.
+Four main approaches exist for splitting the training workload
+among devices, namely,
+\begin{enumerate*}[label=(\arabic*)]
+  \item \emph{data parallelism}, where each device is assigned a subset of the dataset, with each device responsible for training the model on its respective data chunk;
+  \item \emph{model parallelism},
+        involving the distribution of the model across various devices, with each device training its assigned segment on the full dataset;
+  \item \emph{hybrid parallelism},
+        a combination of the previous two;
+        applying one to part of the model and the other to the rest; and
+  \item \emph{pipeline parallelism},
+        which performs different stages of the training process
+        concurrently on different batches of data%      
+\end{enumerate*}
+~\cite{dehghaniDistributedMachineDistributed2023,wangEdgeAIConvergence2020}.
+We note that the term \emph{distributed learning} is ambiguous,
+  used by some authors~\cite{lyuCollaborativeFairnessFederated2020}
+  as a synonym for \glsxtrlong{abb:fl},
+  or the even more ambiguous \emph{collaborative learning}.
+  Our use of the term is taken from%
+  ~\cite{wangEdgeAIConvergence2020,dehghaniDistributedMachineDistributed2023},
+  where it simply means dividing the computational workload among multiple devices
+  for the sake of efficiency.
+% \end{remark}
+
+From a \gls{abb:dq} perspective,
+distributed learning is indistinguishable from centralized learning.
+In all distributed learning approaches, the global dataset is public within the network.
+This makes it easy to at least detect data quality issues.
+% The same cannot be said for \glsxtrlong{abb:fl},
+% which we will discuss in the next section.

@@ -1,0 +1,104 @@
+\subsection{Data quality-aware machine learning}\label{sub:dq:solutions}
+
+Having examined the existing literature on defining data quality,
+we now turn our attention to the question of how to ensure it \gls{abb:ml} systems.
+While the definition and dimensions of \gls{abb:dq}
+are relatively identical between centralized and federated learning,
+many of the solutions to \gls{abb:dq} issues are specific to \gls{abb:fl}.
+As such, we will distinguish between the two cases where necessary.
+
+Broadly speaking, there are three approaches to mitigating data quality issues in \gls{abb:ml},
+depending on the stage of the \gls{abb:ml} pipeline at which they are applied~\cite{%
+	mehrabiSurveyBiasFairness2022,%
+	whangDataCollectionQuality2023%
+}
+% (or equivalently, the component of the \gls{abb:ml} system they target)
+:
+\begin{enumerate*}[label=(\roman*)]
+	\item \emph{preprocessing},
+	      which is applied before training, with the goal \emph{enhancing} the data,
+	\item \emph{in-processing},
+	      which is applied during training,
+	      with the goal of producing a \emph{robust} model, and
+	\item \emph{post-processing},
+	      which is applied after training, (i.e., during inference),
+	      with the goal of \emph{correcting} the model's predictions, or more generally,
+	      removing inaccurate, discriminatory, dangerous, or otherwise inadequate predictions.
+\end{enumerate*}
+This distinction is used by~\cite{mehrabiSurveyBiasFairness2022,ferraguigSurveyBiasMitigation2021}
+as a cross-domain classification of \gls{abb:ai} fairness approaches,
+but we will adopt it here for the more general problem of \gls{abb:dq}.
+Within each of these three broad families,
+approaches can be further distinguished (see~\Cref{fig:solutions-taxonomy}).
+\begin{figure}[hbt]
+	\begin{center}
+		% \resizebox{\linewidth}{!}{\input{assets/figures/tikz/solutions-taxonomy}}
+	\end{center}
+	\caption{The different approaches to mitigating \gls{abb:dq} issues in \gls{abb:ml}.}%
+	\label{fig:solutions-taxonomy}
+\end{figure}
+
+\subsubsection{Preprocessing}\label{ssub:dq:solution:pre}
+
+Preprocessing is a straightforward strategy to addressing \gls{abb:dq} issues, which assumes that data problems should be addressed on the data level.
+Hence, a preprocessing technique operates on
+a possibly low-quality dataset \(\xi\),
+and produces a higher-quality dataset \(\xi^{\prime}\),
+which can be a subset, superset, or a more general function of \(\xi\).
+These cases are respectively known as \emph{data cleaning},
+\emph{data augmentation}, and/or \emph{data transformation}~\cite{%
+	ramirez-gallegoSurveyDataPreprocessing2017,%
+	wernerdevargasImbalancedDataPreprocessing2023,%
+	youHandlingMissingData2020%
+}.
+
+\subsubsection{In-processing}\label{ssub:dq:solution:in}
+
+This family is the richest of the three,
+because training is usually the most elaborate part of the \gls{abb:ml} pipeline.
+This is particularly the case when \gls{abb:fl} is used.
+It is therefore warranted to consider a subclassification
+of in-processing methods, based on what element of the training process they modify.
+
+An instance of the \gls{abb:erm} is given by the risk \(\risk\)
+and the hypothesis class \(\mathcal{H}\), which in turn,
+in \gls{abb:dl}, is determined by a neural architecture,
+and a parameter space \(\Theta\).
+Each of these components can be modified to incorporate \gls{abb:dq} considerations.
+The risk can be modified by
+changing the loss function~\cite{zhangGeneralizedCrossEntropy2018},
+replacing the expectation with a different aggregation function%
+~\cite{linDistributionallyRobustOptimization2022},
+or adding a \gls{abb:dq}-dependent regularization term%
+~\cite{zhouFederatedLabelNoiseLearning2024}.
+The hypothesis class can be modified by changing the neural architecture%
+~\cite{goldbergerTrainingDeepNeuralnetworks2022}
+or restricting the parameter space (typically by adding constraints)%
+~\cite{zafarFairnessConstraintsMechanisms2017}.
+
+\Glsxtrlong{abb:fl} adds another layer of complexity to the picture
+by adding two steps to the training process: client selection and aggregation.
+Both of these steps can be targeted for modification.
+The client selection process can be modified by
+assigning higher probability to clients with higher-quality data%
+~\cite{taikDataQualityBasedScheduling2021,liSamplelevelDataSelection2021}.
+The aggregation process can be modified by
+using a robust \gls{abb:gar}~\cite{el-mhamdiStrategyproofnessGeometricMedian2023}.
+
+\subsubsection{Post-processing}
+\label{ssub:dq:solution:post}
+
+Post-processing is applied  at inference time.
+Out of the three families, post-processing is the only one
+that is universally applicable.
+In the black-box setting, that is when the data and the model
+are inaccessible, unknown, or unmodifiable,
+preprocessing and in-processing are not possible.
+Post-processing techniques, however, can still be applied~\cite{%
+	bolukbasiManComputerProgrammer2016,%
+	hardtEqualityOpportunitySupervised2016,%
+	petersenPostprocessingIndividualFairness2021%
+}.
+We note that to the best of our knowledge, no edge-specific
+post-processing techniques have been proposed in the literature.
+Therefore, we will not elaborate on this family further.

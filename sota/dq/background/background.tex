@@ -1,0 +1,82 @@
+\section{Background}\label{sec:background}
+
+Edge \gls{abb:ml} can be defined as
+performing some or all of the computation involved in \gls{abb:ml} training and inference on edge devices~\cite{singhEdgeAISurvey2023}.
+Therefore, understanding edge \gls{abb:ml} requires understanding \glsxtrlong{abb:ml}, \glsxtrlong{abb:ec}, and the ways in which they interact and integrate to create efficient, distributed systems.
+In this section, we begin by introducing the notation used throughout this paper.
+We then proceed to discuss three key topics in sequence: first, we provide a general overview of \gls{abb:ml}; next, we briefly discuss \gls{abb:ec}; and finally, we delve into the algorithms employed for implementing \gls{abb:ml} at the edge.
+
+\subsection{Notations and conventions}
+\label{par:notations}
+
+Throughout this document, we will make use of the notations presented in~\Cref{tab:notations}.
+When we consider probabilities, expectations, or random variables on some space,
+we implicitly assume a suitable \(\sigma-\)algebra and probability measure on that space.
+
+\begin{table}[h]
+	\caption{Notation used in this document.}
+	\label{tab:notations}
+	\begin{center}
+		\begin{tabularx}{\linewidth}{cX}
+			\toprule
+			\textbf{Notation}                    & \textbf{Significance}                                                                                                      \\
+			\midrule
+			\(\mathcal{X}\)                      & Input space                                                                                                                \\
+			\(\mathcal{Y}, \tilde{\mathcal{Y}}\) & Output space, and noisy output space respectively                                                                          \\
+			\(\mathcal{H}\)                      & Hypothesis class                                                                                                           \\
+			\(\Theta\)                           & Parameter space                                                                                                            \\
+			\(\risk, \risk_{i}\)                 & Global true risk, local true risk of client \(i\)                                                                          \\
+			\(\erisk_{\xi}\)                     & Empirical risk with respect to \(\xi\)                                                                                     \\
+			\(\theta^{\ast}\)                    & Bayes-optimal model (minimizer of \(\risk\))                                                                               \\
+			\(\hat{\theta}_{\xi}\)               & Minimizer of \(\erisk_{\xi}\)                                                                                              \\
+			\(\theta^{(t)},\theta_{i}^{(t)}\)    & Global model (resp. \(i^{\mathrm{th}}\) local model) at round \(t\)                                                        \\
+			\(A \independent B\)                 & \(A\) is independent of \(B\)                                                                                              \\
+			\(A \independent B \mid C\)          & \(A\) is independent of \(B\) given \(C\)                                                                                  \\
+			\([n]\)                              & The set \(\{1, 2, \ldots, n\}\)                                                                                            \\
+			\(\triangle^{n}\)                    & The simplex of \(\reals^{n}\), i.e., \(\left\{ \alpha \in \positive{\reals}^{n} \middle| \lpnorm[1]{\alpha} = 1 \right\}\) \\
+			\bottomrule
+		\end{tabularx}
+	\end{center}
+
+\end{table}
+
+\subimport{.}{ml-general-notions}
+\subimport{.}{edge-computing}
+\subsection{Edge machine learning}\label{sec:edge_ml}
+
+% Having introduced both \glsxtrlong{abb:ml} in \Cref{sub:general_notions_of_ml}
+% and \glsxtrlong{abb:ec} in \Cref{sub:edge_computing},
+% we dedicate this section to discussing their combination.
+We are particularly interested in \gls{abb:dl} on the edge,
+since \gls{abb:dnn} are both very popular, and easy to parallelize.
+In all generality, the process of training a \gls{abb:ml} models on the edge
+is depicted in \Cref{fig:edge_ml_process}.
+End devices collect data from their environment,
+optionally preprocessing or temporally storing it,
+before sending it to an edge node.
+\begin{figure*}[hbt]
+	\begin{center}
+		% \includegraphics[width=.8\linewidth]{assets/figures/drawio/pdf/edge-ml-process.pdf}
+	\end{center}
+	\caption{An end-to-end \glsfmtshort{abb:ml} training process on the edge.}%
+	\label{fig:edge_ml_process}
+\end{figure*}
+The edge node aggregates, processes, and stores the data,
+before training its local model on it,
+possibly invoking the server for orchestration or heavy computations.
+The server manages the training process
+and performs the computations delegated to it by the edge nodes.
+During each step of this process,
+edge nodes can respond to client inference requests
+using their current local model.
+
+
+The number of existing techniques to train \gls{abb:ml} models on the edge
+is beyond what can be covered in a single section.
+Therefore, we focus on two of the most popular techniques:
+distributed learning and federated learning,
+directing the reader's attention to~\cite{khouasTrainingMachineLearning2024}
+for a review of other techniques.
+
+\subimport{.}{distributed-learning}
+\subimport{.}{federated-learning}

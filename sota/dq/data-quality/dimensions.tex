@@ -1,0 +1,102 @@
+\subsection{Data quality dimensions}%
+\label{sub:data_quality_dimensions}
+
+It follows from \Cref{princple:performance_is_dq} that
+the \emph{best} dataset \(\xi\) produces the \emph{best}
+(or Bayes-optimal) model, i.e., \(\hat{\theta}_{\xi} = \theta^{\ast}\).
+More generally, a \emph{good} dataset is one that produces a \emph{good} model,
+i.e., \(\hat{\theta}_{\xi} \approx \theta^{\ast}\).
+Early works on the theory of \gls{abb:ml}~\cite{%
+	vapnikPrinciplesRiskMinimization1991,%
+	neweyChapter36Large1994,%
+	vapnikNatureStatisticalLearning2010%
+}
+have provided theoretical guarantees for this to be the case
+under certain fairly general conditions
+on the hypothesis class \(\mathcal{H}\) and the parameter space \(\Theta\).
+More precisely, they have shown that, with high probability,
+a large enough dataset \(\xi\), drawn \gls{abb:iid}
+from the true distribution \(\Pr_{(X, Y)}\),
+will produce a good model (in the sense defined above).
+
+This already gives us three sufficient conditions for a dataset to be good,
+namely that it is:
+\begin{enumerate*}[label=(\roman*)]
+	\item large enough,
+	\item \gls{abb:iid}, and
+	\item drawn from the true distribution.
+\end{enumerate*}
+Size is usually not seen as a data quality issue,
+so we will not consider it further.
+The other two conditions, however, are of great interest to us,
+and can serve as the main axes of our definition of data quality.
+Based on the previous analysis,
+we can tentatively divide \gls{abb:dq} concerns into the following categories:
+\begin{enumerate}
+	\item \emph{Data dependence}.
+	      Which occurs when the elements of \(\xi\) are not independent.
+	\item \emph{Distribution mismatch}.
+	      Which occurs when the elements of \(\xi\)
+	      do not follow the true distribution \(\Pr_{(X, Y)}\).
+	      The joint distribution \(\Pr_{(X, Y)}\)
+	      is characterized by the marginal distribution \(\Pr_{X}\)
+	      and the conditional distribution \(\Pr_{Y \mid X}\),
+	      which allows us to distinguish between two types of distribution mismatch:
+	      \begin{enumerate}
+		      \item \emph{Attribute skew}.
+		            Which happens when the sampling process
+		            is biased towards certain regions of the input space \(\mathcal{X}\).
+		      \item \emph{Label noise}.
+		            Which happens when the labeling process is error-prone.
+	      \end{enumerate}
+\end{enumerate}
+It is worth noting that the above scenarios are not mutually exclusive.
+Distribution mismatch can happen due to a combination
+of attribute skew and label noise,
+and data dependence is likely to cause attribute skew.
+
+An easy objection one could raise against the above categorization,
+and indeed against \Cref{princple:performance_is_dq} itself,
+is its reliance on the premise that model quality
+can be reduced to performance (i.e., true risk).
+In doing so, it fails to completely capture
+the context-dependent nature of \gls{abb:dq}.
+As a result, all the above considerations
+are more or less \emph{intrinsic} to the data.
+
+To justify the inclusion of \emph{extrinsic} considerations,
+we argue that model performance is not sufficient to capture model quality.
+A model can be considered bad while having excellent performance,
+if it fails to satisfy certain ethical or social criteria.
+For example, a model that has near-optimal true risk
+can have arbitrarily high risk on a certain subset \(A \subset \mathcal{X}\),
+if \(\Pr{\left[X \in A \right]}\) is small enough.
+Such a model is unfair to the elements of \(A\),
+which can lead to legal and ethical issues if \(A\) is a marginalized group.
+Similarly, a model that allows for the reconstruction of \(\xi\),
+thereby betraying the privacy of the individuals in the training set
+is also considered bad, even if it has excellent performance.
+Alternatively, the data could be of low quality
+due to its source rather than its content.
+For example, a dataset that can include deliberately wrong information.
+Accounting for these considerations, we amend \Cref{princple:performance_is_dq}
+to a more general form.
+\begin{principle}\label{princple:mq_is_dq}
+	A good dataset \(\xi\) can be defined as one that (when used for \gls{abb:erm})
+	produces a good model, which in turn can be defined
+	as a model \(\hat{\theta}_{\xi}\) that satisfies certain ethical and social criteria,
+	in addition to having low true risk \(\risk\left( \hat{\theta}_{\xi} \right)\).
+\end{principle}
+An extended version of the above taxonomy to include these extrinsic considerations
+in compliance with \Cref{princple:mq_is_dq} is shown in \Cref{fig:dq:dims:taxonomy}.
+Each dimension of this taxonomy will be discussed in detail in  \Crefrange{sec:independence}{sec:trust}.
+
+
+\begin{figure}[hbt]
+	\begin{center}
+		% \resizebox{\linewidth}{!}{\input{assets/figures/tikz/dimensions}}
+	\end{center}
+	\caption{A taxonomy of data quality dimensions}
+	\label{fig:dq:dims:taxonomy}
+\end{figure}
+

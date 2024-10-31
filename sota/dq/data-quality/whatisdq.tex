@@ -1,0 +1,51 @@
+\subsection{What is data quality?}\label{sub:what_is_data_quality}
+
+A great body of research has been dedicated to making sense of the concept of data quality,
+producing an equally great number of views on how to define it.
+Among the few common threads between a majority of these works are the following two observations:
+\begin{enumerate*}[label=(\arabic*)]
+  \item data quality is context-dependent, i.e.,
+        rather than being a function of the dataset alone,
+        it is a function of the entire context of its use, and
+  \item data quality is multidimensional, i.e.,
+        multiple aspects of data must be considered when assessing it.
+\end{enumerate*}
+The first observation is demonstrated by the convergent pragmatic definition of data quality
+as ``fitness for use''~\cite{sidiDataQualitySurvey2012},
+``suitability for business purposes''~\cite{hagendorffLinkingHumanMachine2021},
+or ``the degree to which the data of interest fulfills given requirements''%
+~\cite{hassensteinDataQualityConcepts2022}.
+The second is supported by the overwhelming trend of using multiple properties of a dataset
+to assess its quality~\cite{%
+  budachEffectsDataQuality2022,%
+  mahantiDataQualityDimensions2019,%
+  sidiDataQualitySurvey2012%
+}.
+
+For the purpose of this work, we adhere to both of the above-stated observations.
+The first one boils down to the fact that
+assigning quality to a dataset ---or anything else for that matter---
+is a normative judgment, and therefore cannot be done without an underlying objective.
+In the context of \gls{abb:ml}, and particularly for risk minimization,
+the objective is to minimize the risk \(\risk\).
+Although this is usually approximated by \gls{abb:erm},
+minimizing \(\risk\) remains the ultimate goal, and thus the measure of quality.
+This implies the following principle, which we will use
+to guide us to a definition of data quality.
+
+\begin{principle}\label{princple:performance_is_dq}\
+  A good dataset \(\xi\) can be defined as one that (when used for \gls{abb:erm})
+  produces a good model, which in turn can be defined
+  as a model \(\hat{\theta}_{\xi}\) with low \emph{true risk}
+  \(\risk\left( \hat{\theta}_{\xi} \right)\).
+\end{principle}
+
+Echoes of this principle can be found in the literature,
+for example in~\cite{danilovDataQualityEstimation2023,camachoQualityQualityOut2023}.
+Its main advantage is that it reduces the nebulous and poorly defined concept of data quality
+to the comparatively well-defined concept of model quality,
+measured by the completely unambiguous true risk.
+The second observation can be captured by the use of multiple properties,
+which together imply that \(\risk\left( \hat{\theta}_{\xi} \right)\)
+is small.
+In the following, we will explore some of these properties.

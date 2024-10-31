@@ -1,0 +1,47 @@
+\subsection{Edge computing}\label{sub:edge_computing}
+
+The edge of the network (or simply the edge) can be defined as the interface
+between the outer layers of the network,
+represented by user devices commonly referred to as \emph{end devices}
+(e.g., sensors, smartphones, and laptops),
+and its \emph{core} of the network (often represented by a cloud server)%
+~\cite{singhEdgeAISurvey2023}.
+This definition can be vague, as the internet does not come with a clear predefined hierarchy.
+As a result, the terminology used to describe the edge is often ambiguous,
+particularly when it comes to the distinction
+between \emph{end devices} and \emph{edge nodes}%
+~\cite{wangEdgeAIConvergence2020}.
+In this work, we adopt the terminology proposed by~\citet{wangEdgeAIConvergence2020}:
+
+\begin{enumerate}
+	\item \emph{End devices} or \emph{end nodes}, are the bottom layer of the network.
+	      Any mobile device (e.g., \gls{abb:iot} device, smartphone, or \gls{abb:av})
+	      with some (usually limited) computational power can be considered an end device.
+	      Due to their limited computational power,
+	      end devices are only capable of performing the most basic \gls{abb:ml} tasks,
+	      such as inference.
+	\item \emph{Edge nodes}, edge servers, or edge devices,
+	      are the middle layer of 3-tiered end-edge-cloud architecture.
+	      They are usually more powerful than end devices,
+	      and are thus capable of performing more complex \gls{abb:ml} tasks,
+	      such as training or orchestration.
+\end{enumerate}
+
+A more fine-grained hierarchy for the network graph is given in \Cref{fig:edge_architecture}.
+Where the core is made up of the 2 innermost layers,
+the edge is the \nth{3} layer, and end devices occupy the next layer.
+\begin{figure}[hbt]
+	\begin{center}
+		% \includegraphics[width=.8\linewidth]{assets/figures/drawio/pdf/edge-architecture.pdf}
+	\end{center}
+	\caption{Network architecture for edge computing~\cite{zhouEdgeIntelligencePaving2019}.}%
+	\label{fig:edge_architecture}
+\end{figure}
+
+The difficulty of defining and agreeing on a clear hierarchy for the edge
+is partially behind the emergence of multiple paradigms for \gls{abb:ec}.
+These include \emph{cloudlet computing} and \gls{abb:mec},
+which rely on a 3-tiered architecture,
+and \gls{abb:fc},
+which organizes the network into an end-to-cloud \emph{continuum} rather than a hierarchy%
+~\cite{singhEdgeAISurvey2023}.

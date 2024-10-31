@@ -1,0 +1,121 @@
+\subsubsection{Federated learning}\label{ssub:background:fl}
+
+
+\Glsxtrfull{abb:fl} is a collaborative framework for training \gls{abb:ml} models
+using data and computational resources from different devices
+without compromising the privacy of their local data%
+~\cite{wangEdgeAIConvergence2020,xiaSurveyFederatedLearning2021}.
+It allows multiple devices to collaborate on the training of a \gls{abb:nn}%
+~\cite{mcmahanCommunicationEfficientLearningDeep2017}.
+These devices can be different in terms of hardware and software,
+and their datasets are often incomparable in terms of size, diversity, and distribution%
+~\cite{xiaSurveyFederatedLearning2021}.
+In so-called \emph{centralized} \gls{abb:fl}%
+~\cite{naikIntroductionFederatedLearning2024},
+nodes are partitioned into two subsets (see \Cref{fig:edge_ml_process}):
+\begin{enumerate*}[label=(\roman*)]
+  \item \emph{clients}, which are the nodes that contribute their data to the training process and
+  \item \emph{servers}, which are the nodes that orchestrate the training process%
+        ~\cite{xiaSurveyFederatedLearning2021}.
+\end{enumerate*}
+
+\subfour{Formulation of the problem:}
+% \label{par:background:fl:fomulation}
+In federated learning, the target distribution \(\Pr_{(X, Y)}\)
+is a \emph{mixture} of distributions.
+A set of \(N\) clients, which we assimilate to the set of indices \([N]\) is given,
+along with corresponding weights
+\((\alpha_{1}, \alpha_{2}, \dots, \alpha_{N}) \in \triangle^{N}\),
+and datasets \(\xi_{1}, \xi_{2}, \dots, \xi_{N}\),
+where the elements of \(\xi_{i}\) are \gls{abb:iid} random pairs
+sampled from the \emph{local} distribution \(\Pr_{(X_{i}, Y_{i})}\).
+The so-called \emph{global} distribution \(\Pr_{(X, Y)}\) is then defined as:
+\begin{equation}
+  \Pr_{(X, Y)} \coloneqq \sum_{i=1}^{N} \alpha_{i} \Pr_{(X_{i}, Y_{i})}.
+\end{equation}
+Given a common loss function \(\ell\),
+the \emph{local} risk \(\risk_{i}\) and empirical risk \(\erisk_{\xi_{i}}\)
+of client \(i\) are defined analogously to \Cref{eq:risk,eq:empirical_risk},
+with respect to local distribution
+\(\Pr_{(X_{i}, Y_{i})}\) and sample \(\xi_{i}\) respectively.
+The same is true for their \emph{global} counterparts \(\risk\) and \(\erisk_{\xi}\),
+but with respect to the global distribution and sample
+\(\xi \coloneqq \bigcup_{i=1}^{N} \xi_{i}\)
+respectively,
+and one easily verifies that they can be expressed as convex combinations of the local versions
+with coefficients proportional to sample sizes.
+% \begin{align}
+%   \risk(\theta)   & = \sum_{i=1}^{N} \alpha_{i} \risk_{i}(\theta),   \\
+%   \erisk_{\xi}(\theta) & = \sum_{i=1}^{N} \alpha_{i} \erisk_{\xi_{i}}(\theta).
+% \end{align}
+Federated learning is simply the problem of minimizing the global empirical risk,
+which we also refer to as \gls{abb:ferm}.
+
+
+\subfour{The training process:}
+% \label{par:background:fl:training}
+Limiting our attention to centralized \gls{abb:fl} with a single server,
+a general algorithm for \gls{abb:fl} is given below~\cite{%
+  mcmahanCommunicationEfficientLearningDeep2017,%
+  xiaSurveyFederatedLearning2021,%
+  wangEdgeAIConvergence2020%
+}.
+In the first stage, the server initializes the global model \(\theta^{(0)}\)
+either randomly or using a pretrained parameter vector.
+Next, the server and clients iteratively alternate between local training and global aggregation
+for multiple \emph{rounds} until a stopping criterion is met.
+At the beginning of round \(t\), the server selects a subset \(S_{t}\) of clients
+according to some selection probability distribution,
+to whom it broadcasts the current global model \(\theta^{(t-1)}\).
+In the local training step each client \(i\in S_{t}\)
+computes a local model \(\theta^{(t)}_{i}\) by solving \gls{abb:erm} locally:
+\begin{equation}
+  \theta^{(t)}_{i} = \argmin_{\theta \in \Theta} \erisk_{\xi_{i}}(\theta).
+\end{equation}
+This is usually done by running gradient descent on \(\erisk_{\xi_{i}}\)
+with \(\theta^{(t-1)}\) as initialization
+\begin{equation}
+  \theta^{(t)}_{i} = \theta^{(t-1)} - \eta_{t}\nabla \erisk_{\xi_{i}}\left(\theta^{(t-1)}\right),
+\end{equation}
+and a learning rate \(\eta_{t}\), assigned by the server.
+Each client then sends its local model \(\theta^{(t)}_{i}\) to the server,
+where aggregation is performed:
+\begin{equation}
+  \theta^{(t)} = A\left( \left\{ \theta^{(t)}_{i} \middle| i \in S_{t} \right\} \right)
+\end{equation}
+using a \gls{abb:gar} \(A\), which maps subsets of \(\Theta\) to elements of \(\Theta\).
+A simple example of a \gls{abb:gar} is the convex combination as follows:
+\begin{equation}\label{eq:fedavg}
+  \theta^{(t)} = \frac{1}{\sum_{i\in S_{t}}\alpha_{i}}
+  \sum_{i\in S_{t}} \alpha_{i} \theta^{(t)}_{i},
+\end{equation}
+in which case the algorithm is called \gls{abb:fedavg}~\cite{mcmahanCommunicationEfficientLearningDeep2017}.
+The global model \(\theta^{(T)}\) of the final round \(T\)
+is the output of the algorithm.
+
+
+\subfour{Discussion:}
+% \label{par:background:fl:discussion}
+% Unlike distributed learning, 
+\gls{abb:fl} is fundamentally different from centralized learning.
+Indeed, one of the starkest differences is that \gls{abb:fl} does not require data sharing,
+which makes collaboration easier, but also, and crucially,
+means that it does not reveal any information about local data,
+except for what can be inferred from the local models (see \Cref{sub:privacy:model-reveals}).
+This privacy guarantee is one of the main selling points of \gls{abb:fl},
+and indeed one of the motivations cited for its introduction%
+~\cite{mcmahanCommunicationEfficientLearningDeep2017}.
+A second point of contrast is that \gls{abb:fl} does not rely on the \gls{abb:iid} assumption.
+As the reader may have noticed, in formulating the \gls{abb:ferm} problem,
+we only assumed \emph{locally \gls{abb:iid}} data.
+
+These characteristics make \gls{abb:fl} a very attractive framework
+for doing \gls{abb:ml} on the edge, justifying its wide adoption for many edge use cases
+like healthcare, \gls{abb:iov}, and recommendation systems%
+~\cite{wangEdgeAIConvergence2020,xiaSurveyFederatedLearning2021}.
+Simultaneously, these same characteristics make \gls{abb:fl} meaningfully different
+from both distributed learning and centralized learning from a data quality perspective,
+which creates problems and opportunities
+that are unique to distributed environments like the edge.
+For this reason, we will focus on \gls{abb:fl} in the rest of this paper,
+using it interchangeably with edge \gls{abb:ml}.
