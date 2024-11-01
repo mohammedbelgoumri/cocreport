@@ -1,0 +1,122 @@
+\section{Introduction}\label{sec:introduction}
+
+The recent surge in both the scale and prevalence of \gls{abb:ai} systems~\cite{murshedMachineLearningNetwork2022} has led to a significant increase in data and computational demands.
+Consequently, the traditional model of solely relying on cloud computing for training and inference is reaching its limits~\cite{singhEdgeAISurvey2023}.
+Combined with emerging concerns about data privacy and security, and recent advances in \gls{abb:ec}, this has led to a paradigm shift in the field of \gls{abb:ml}.
+A new approach has emerged, which advocates for performing as much of the \gls{abb:ml} workload as possible close to the data source (on the so-called edge of the network), offloading only the most computationally intensive tasks to the cloud~\cite{wangEdgeAIConvergence2020}.
+\begin{table}[h!]
+	\centering
+	\adjustbox{max width=\textwidth}{%
+		\begin{tabular}{lccccccccc}
+			\toprule
+			                                                            &               &                                            &                                        & \multicolumn{6}{c}{\textbf{Data quality}}                                                                                                \\
+			\cmidrule{5-10}
+			\textbf{Survey}                                             & \textbf{Year} & \textbf{\stackanchor{Federated}{learning}} & \textbf{\stackanchor{Edge}{computing}} & \emph{Independence}                       & \emph{Attribute skew} & \emph{Label noise} & \emph{Fairness} & \emph{Privacy} & \emph{Trust} \\
+			\midrule
+			\citet{sidiDataQualitySurvey2012}                           & 2012          & \xmark                                     & \xmark                                 & \xmark                                    & \cmark                & \cmark             & \xmark          & \xmark         & \cmark       \\
+			\citet{wangEdgeAIConvergence2020}                           & 2020          & \cmark                                     & \cmark                                 & \xmark                                    & \xmark                & \cmark             & \cmark          & \cmark         & \cmark       \\
+			\citet{hanSurveyLabelnoiseRepresentation2021}               & 2021          & \xmark                                     & \xmark                                 & \xmark                                    & \xmark                & \cmark             & \xmark          & \xmark         & \xmark       \\
+			\citet{jereTaxonomyAttacksFederated2021}                    & 2021          & \cmark                                     & \xmark                                 & \xmark                                    & \xmark                & \xmark             & \xmark          & \cmark         & \cmark       \\
+			\citet{xiaSurveyFederatedLearning2021}                      & 2021          & \cmark                                     & \cmark                                 & \xmark                                    & \cmark                & \xmark             & \xmark          & \cmark         & \cmark       \\
+			\citet{yinComprehensiveSurveyPrivacypreserving2021}         & 2021          & \cmark                                     & \cmark                                 & \xmark                                    & \xmark                & \xmark             & \xmark          & \cmark         & \xmark       \\
+			\citet{ferraguigSurveyBiasMitigation2021}                   & 2021          & \cmark                                     & \cmark                                 & \xmark                                    & \xmark                & \xmark             & \cmark          & \xmark         & \xmark       \\
+			\citet{truongPrivacyPreservationFederated2021}              & 2021          & \cmark                                     & \cmark                                 & \xmark                                    & \xmark                & \xmark             & \xmark          & \cmark         & \xmark       \\
+			\citet{zhuFederatedLearningNonIID2021}                      & 2021          & \cmark                                     & \cmark                                 & \xmark                                    & \cmark                & \cmark             & \xmark          & \xmark         & \xmark       \\
+			\citet{abrehaFederatedLearningEdge2022}                     & 2022          & \cmark                                     & \cmark                                 & \xmark                                    & \cmark                & \xmark             & \xmark          & \cmark         & \cmark       \\
+			\citet{liuThreatsAttacksDefenses2022}                       & 2022          & \cmark                                     & \xmark                                 & \xmark                                    & \xmark                & \xmark             & \xmark          & \cmark         & \cmark       \\
+			\citet{mehrabiSurveyBiasFairness2022}                       & 2022          & \xmark                                     & \xmark                                 & \xmark                                    & \xmark                & \xmark             & \cmark          & \xmark         & \xmark       \\
+			\citet{murshedMachineLearningNetwork2022}                   & 2022          & \cmark                                     & \cmark                                 & \xmark                                    & \xmark                & \xmark             & \xmark          & \cmark         & \cmark       \\
+			\citet{xiaPoisoningAttacksFederated2023}                    & 2023          & \cmark                                     & \xmark                                 & \xmark                                    & \xmark                & \xmark             & \xmark          & \xmark         & \cmark       \\
+			\citet{shiChallengesApproachesMitigating2022}               & 2022          & \cmark                                     & \xmark                                 & \xmark                                    & \xmark                & \xmark             & \xmark          & \xmark         & \cmark       \\
+			\citet{rodriguez-barrosoSurveyFederatedLearning2023}        & 2023          & \cmark                                     & \xmark                                 & \xmark                                    & \cmark                & \xmark             & \xmark          & \cmark         & \cmark       \\
+			\citet{abyaneUnderstandingQualityChallenges2023}            & 2023          & \cmark                                     & \xmark                                 & \xmark                                    & \xmark                & \xmark             & \cmark          & \cmark         & \cmark       \\
+			\citet{whangDataCollectionQuality2023}                      & 2023          & \xmark                                     & \xmark                                 & \xmark                                    & \xmark                & \cmark             & \cmark          & \xmark         & \xmark       \\
+			\citet{gallegosBiasFairnessLarge2023}                       & 2023          & \xmark                                     & \xmark                                 & \xmark                                    & \xmark                & \xmark             & \cmark          & \xmark         & \xmark       \\
+			\citet{leeSurveySocialBias2023}                             & 2023          & \xmark                                     & \xmark                                 & \xmark                                    & \xmark                & \xmark             & \cmark          & \xmark         & \xmark       \\
+			\citet{gongSurveyDatasetQuality2023}                        & 2023          & \xmark                                     & \xmark                                 & \xmark                                    & \cmark                & \cmark             & \xmark          & \cmark         & \xmark       \\
+			\citet{wangCollaborativeMachineLearning2023}                & 2023          & \cmark                                     & \xmark                                 & \xmark                                    & \xmark                & \xmark             & \xmark          & \cmark         & \cmark       \\
+			\citet{rafiFairnessPrivacyPreserving2024}                   & 2024          & \cmark                                     & \xmark                                 & \xmark                                    & \xmark                & \xmark             & \cmark          & \cmark         & \xmark       \\
+			\citet{sanchezsanchezFederatedTrustSolutionTrustworthy2024} & 2024          & \cmark                                     & \cmark                                 & \xmark                                    & \xmark                & \xmark             & \cmark          & \cmark         & \cmark       \\
+			\rowcolor[gray]{0.9} Our survey                             & 2024          & \cmark                                     & \cmark                                 & \cmark                                    & \cmark                & \cmark             & \cmark          & \cmark         & \cmark       \\
+			\bottomrule
+		\end{tabular}%
+	}
+	\caption{Comparison of the aspectes and dimensions covered in this survey with other surveys. A \cmark~indicates that the dimension is covered, while a \xmark~indicates that the dimension is not covered in the respective survey.}%
+	\label{tab:comparison_to_other_surveys}
+\end{table}
+
+
+Edge \gls{abb:ml} promises several benefits over centralized \gls{abb:ml}.
+One major such benefit is the reduction of the volume and frequency of data transfers,
+thereby reducing latency, network bandwidth consumption, and the risk of data breaches%
+~\cite{singhEdgeAISurvey2023,wangEdgeAIConvergence2020}.
+Moreover, the distributed nature of the edge naturally precludes a single point of failure,
+making the system more resilient and fault-tolerant~\cite{taikDataQualityBasedScheduling2021}.
+However, edge \gls{abb:ml}, at least in its current form,
+is not universally superior to centralized \gls{abb:ml}.
+While it does address many of the latter's shortcomings,
+it also introduces challenges of its own.
+Chief among these challenges is the question of \gls{abb:dq}.
+Broadly speaking, \gls{abb:dq} refers to the fitness of data for a given purpose%
+~\cite{mahantiDataQualityDimensions2019,hassensteinDataQualityConcepts2022}.
+Already a major concern in centralized \gls{abb:ml}~\cite{camachoQualityQualityOut2023},
+\gls{abb:dq} is even more relevant in the context of edge \gls{abb:ml},
+where resource constraints and the distributed nature of the system
+conspire to make data faults more frequent, more severe, and harder to detect and correct.
+
+% \paragraph{Motivation}\label{par:introduction:motivation}
+
+Owing to the critical role \gls{abb:dq} plays
+in the successful training and deployment of \gls{abb:ml} models on the edge,
+many researchers have begun to investigate the topic,
+producing a large and growing corpus of literature on the subject.
+However, due to the multidisciplinary nature of \gls{abb:dq},
+and the lack of an established, unified, and widely accepted framework for studying it,
+the literature is fragmented,
+with little communication or collaboration
+between researchers from relevant but different fields.
+Simultaneously a symptom and a partial cause of this fragmentation,
+is the lack of a survey of the state of the art
+on \gls{abb:dq} in edge \gls{abb:ml}.
+While a few comprehensive surveys have been published covering \gls{abb:dq}
+in the general contexts of both
+\gls{abb:ml}~\cite{gongDiversityMachineLearning2019},
+and \gls{abb:ec}~\cite{karkouchDataQualityInternet2016},
+to the best of our knowledge,
+none exists that addresses it for the edge \gls{abb:ml} case.
+Instead, there is a plethora of surveys,
+each focusing on a different aspect of \gls{abb:ml} data quality,
+many of which do address the specific case of edge \gls{abb:ml}.
+\Cref{tab:comparison_to_other_surveys} provides a list of such surveys,
+along with the aspects of \gls{abb:dq} they cover.
+
+
+
+
+% \paragraph{Contributions}\label{par:introduction:contributions}
+
+% todo: consider making this a bulleted list
+In this survey, we aim to provide a broad and comprehensive overview
+of the state of the art on \gls{abb:dq} in edge \gls{abb:ml},
+gathering works from the different \gls{abb:ml} research areas,
+such as noise-resilience, fairness, privacy, and Byzantine fault tolerance
+under the unifying umbrella of \gls{abb:dq}.
+To this end, we establish a guiding principle for defining \gls{abb:dq}
+based on the formulation of \gls{abb:ml} as an optimization problem.
+We use this principle, along with theoretical sufficient conditions
+for the convergence of \gls{abb:ml} algorithms,
+to devise a list of \gls{abb:dq} dimensions.
+For each dimension, we provide a detailed discussion of existing works,
+including common definitions, the faults that can occur and the taxonomy thereof,
+the proposed solutions,
+and, where applicable, the ways in which the dimension has been studied
+in the context of edge \gls{abb:ml}.
+
+% \paragraph{Organization}
+% \label{par:introduction:organization}
+
+The remainder of this paper is organized as follows.
+\Cref{sec:background} provides preliminary background information on edge \gls{abb:ml}, including a general discussion of \glsxtrlong{abb:ml}, a brief overview of the edge environment, and the algorithms used to perform \gls{abb:ml} on the edge, with particular focus on \glsxtrlong{abb:fl}.
+\Cref{sec:data_quality} is dedicated to \gls{abb:dq} in \gls{abb:ml}, its definition, dimensions, and the families of solutions proposed to ensure it.
+\Crefrange{sec:independence}{sec:trust} present one \gls{abb:dq} dimension each, providing definitions, possible faults, proposed solutions (if any), all in the context of edge \gls{abb:ml} (where literature permits).
+Finally, \Cref{sec:conclusion} concludes the paper with a summary of the main findings and a discussion of future research directions.
