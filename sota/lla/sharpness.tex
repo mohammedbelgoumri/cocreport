@@ -9,7 +9,7 @@ more specifically, sharpness is negatively correlated with generalization
 (see \Cref{fig:sharpvflat},~\citealt{keskarLargeBatchTrainingDeep2022}).
 \begin{figure}[htb]
 	\begin{center}
-		% \includegraphics[width=0.6\linewidth]{pdf/sharpvflat}
+		\includegraphics[width=0.6\linewidth]{pdf/sharpvflat.pdf}
 	\end{center}
 	\caption{%
 		The flat minimum (left) performs similarly on both training and test data,
@@ -49,7 +49,7 @@ Both of these definitions share a glaring weakness: they cannot handle bounded f
 (see \Cref{fig:epsflat_counterexample}).
 \begin{figure}[hbt]
 	\begin{center}
-		% \includegraphics[width=0.6\linewidth]{python/pdf/epsflat_counterexample}
+		\includegraphics[width=0.6\linewidth]{python/pdf/epsflat_counterexample.pdf}
 	\end{center}
 	\caption{%
 		All functions \(f_{\xi}\) are infinitely \(1\)-flat, and \(1\)-sharp at \(\theta^{\ast} = 0\)
@@ -65,7 +65,8 @@ like the trace~\cite{%
 	ibayashiMinimumSharpnessScaleinvariant2021,%
 	leeNewCharacterizationEdge2022,%
 	petzkaReparameterizationInvariantFlatnessMeasure2019%
-}, the spectral norm~\cite{yangTaxonomizingLocalGlobal2021},
+}, the spectral norm%
+~\cite{yangTaxonomizingLocalGlobal2021,kaurMaximumHessianEigenvalue2023},
 and, more generally, the eigenvalue distribution~\cite{%
 	keskarLargeBatchTrainingDeep2022,%
 	chaudhariEntropySGDBiasingGradient2019%
@@ -105,46 +106,76 @@ defined as
 \),
 where \(I(\theta^{\ast})\) is the Fisher information matrix,
 is motivated by information geometry and is in fact \emph{intrinsic},
-i.e.,\ identical for different parameterizations of the same model.
+i.e.,\ identical for different parametrizations of the same model.
 Pushing this idea further, \citet{jangReparametrizationInvariantSharpnessMeasure2022}
 propose another information-geometric sharpness measure,
-which is invariant to arbitrary smooth re-parametrizations.
+which is invariant to arbitrary smooth reparametrizations.
 Finally, \citet{zhangWhyFlatnessDoes2021} bypass the issue of parameterization altogether,
 by directly defining sharpness in function space.
 More concretely, the sharpness of a model is the prior probability that
 \gls{abb:sgd} will converge to it from a random initialization.
 
-\begin{enumerate}
-	%! Path forward: introduce all of these hessian measures in passing, without much detail,
-	%! as it turns outh the Hessian is purely incidental to some of them.
-	%! Problem: evrything so far is parameter dependent.
-	\item  use Bayesian learning to define in function space.
-\end{enumerate}
-
 \subsection{Sharpness and generalization}\label{sub:sharpness:generalization}
-\cite{chenBootstrapGeneralizationAbility2023}
-Global structure:
-\begin{itemize}
-	\item \citet{keskarLargeBatchTrainingDeep2022} say that flat minima generalize better than sharp minima.
-	\item \citet{%
-		      dinhSharpMinimaCan2017,%
-		      zhangWhyFlatnessDoes2021,%
-		      andriushchenkoModernLookRelationship2023%
-	      }
-	      question the relationship between sharpness and generalization.
-	\item \citet{zhangWhyFlatnessDoes2021} introduce function space sharpness.
-	\item \citet{jangReparametrizationInvariantSharpnessMeasure2022}
-	      introduce information-geometric sharpness.
-\end{itemize}
 
-\cite{%
-	andriushchenkoUnderstandingSharpnessAwareMinimization2022,%
-	zhangWhyFlatnessDoes2021,%
-	tahmasebiUniversalClassSharpnessAware2024,%
-	andriushchenkoModernLookRelationship2023,%
+According to \citet{keskarLargeBatchTrainingDeep2022,hochreiterFlatMinima1997},
+sharpness (as defined in \Cref{eq:sharpness:epsflatness,eq:sharpness:epsharpness})
+is negatively correlated with generalization.
+Empirical results and theoretical arguments are advanced to support this claim.
+\citet{sunExploringVulnerabilityDeep2021} further argue that sharpness is connected
+to vulnerability to adversarial attacks.
+However, this view is challenged by \citet{dinhSharpMinimaCan2017},
+who demonstrate that these measures are scale dependent,
+even when the scaling leaves the model unchanged.
+For \(\relu\)-activated networks, homogeneity means that this dependence implies
+any parameter vector is equivalent to an arbitrarily sharp one, making these measures meaningless.
+
+Some authors attempt to address this by making their sharpness measures invariant to scaling
+and other transformations~\cite{%
 	ibayashiMinimumSharpnessScaleinvariant2021,%
-	foretSharpnessawareMinimizationEfficiently2020,%
-	caldarolaImprovingGeneralizationFederated2022,%
-	leeNewCharacterizationEdge2022,%
-	chaudhariEntropySGDBiasingGradient2019%
-}
+	petzkaRelativeFlatnessGeneralization2021,%
+	liangFisherRaoMetricGeometry2019,%
+	jangReparametrizationInvariantSharpnessMeasure2022%
+}.
+Some of them directly incorporate the group of transformations in the definition of sharpness%
+~\cite{%
+	ibayashiMinimumSharpnessScaleinvariant2021,%
+	kwonASAMAdaptiveSharpnessAware2021%
+},
+while others appeal to concepts from differential geometry and information geometry%
+~\cite{%
+	liangFisherRaoMetricGeometry2019,%
+	jangReparametrizationInvariantSharpnessMeasure2022%
+}.
+
+Other authors~\cite{zhangWhyFlatnessDoes2021,andriushchenkoModernLookRelationship2023}
+build on the observations in~\citet{dinhSharpMinimaCan2017},
+to argue that sharpness is not the right measure to look at.
+\citet{andriushchenkoModernLookRelationship2023} in particular,
+find appealing evidence that the correct measure of sharpness is highly dependent on the data.
+
+\subsection{Addressing sharpness}\label{sub:sharpness:addressing}
+
+The connection between sharpness and generalization motivated the development of
+multiple algorithms that aim to improve generalization by minimizing sharpness.
+Most prominent among these, is \gls{abb:sam}~\cite{foretSharpnessawareMinimizationEfficiently2020},
+which adds a sharpness term similar to \(\epsilon\)-sharpness to the loss function.
+Experiments on multiple benchmarks show generalization improvements,
+and an explicit generalization bound involving the sharpness term is proven.
+A number of follow-up works have been published, building on the success of \gls{abb:sam}
+by adding invariance to the sharpness measure~\cite{%
+	kwonASAMAdaptiveSharpnessAware2021,%
+	ibayashiMinimumSharpnessScaleinvariant2021%
+},
+providing insights into its mechanism~\cite{%
+	tahmasebiUniversalClassSharpnessAware2024,%
+	andriushchenkoUnderstandingSharpnessAwareMinimization2022%
+},
+and extending it to \gls{abb:fl}~\cite{caldarolaImprovingGeneralizationFederated2022}.
+
+Despite \gls{abb:sam}'s success, it is not the only algorithm that aims to minimize sharpness.
+Entropy-SGD~\cite{chaudhariEntropySGDBiasingGradient2019} is another such algorithm.
+Instead of adding a sharpness term to the loss function,
+it produces a smoothed version that is less sharp.
+This alternate objective is minimized using Langevin dynamics,
+which leads to a nested optimization problem.
+
